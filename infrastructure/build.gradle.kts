@@ -5,4 +5,5 @@ val bootJar: BootJar by tasks
 bootJar.enabled = false
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-security")
 }
