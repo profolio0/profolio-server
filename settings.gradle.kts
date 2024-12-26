@@ -3,5 +3,9 @@ plugins {
 }
 rootProject.name = "profolio"
 include("application")
-include("domain")
 include("infrastructure")
+
+// domain
+include("domain")
+include("domain:domain-rds")
+findProject(":domain:domain-rds")?.name = "domain-rds"
