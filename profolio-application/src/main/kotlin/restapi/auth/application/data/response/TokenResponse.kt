@@ -1,4 +1,4 @@
-package auth.application.data.response
+package restapi.auth.application.data.response
 
 data class TokenResponse(
     val accessToken: String,

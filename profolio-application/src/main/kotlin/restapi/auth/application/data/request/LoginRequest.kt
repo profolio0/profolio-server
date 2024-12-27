@@ -1,4 +1,4 @@
-package auth.application.data.request
+package restapi.auth.application.data.request
 
 data class LoginRequest(
     val email: String,
