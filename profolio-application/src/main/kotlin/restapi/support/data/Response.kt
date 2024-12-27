@@ -1,4 +1,4 @@
-package restapi
+package restapi.support.data
 
 data class Response<E>(
     val status: Int,

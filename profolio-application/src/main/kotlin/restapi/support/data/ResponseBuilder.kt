@@ -1,4 +1,4 @@
-package restapi
+package restapi.support.data
 
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
