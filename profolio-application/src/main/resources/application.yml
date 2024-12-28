@@ -8,6 +8,4 @@ spring:
     hibernate:
       ddl-auto: create
     properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-        show-sql: false
+      show-sql: false
