@@ -17,6 +17,8 @@ class TokenFilter: OncePerRequestFilter() {
     ) {
         val token: String = TokenExtractor.extract(request, TokenType.BEARER)
 
-        
+        if (token.isNotEmpty()) {
+
+        }
     }
 }

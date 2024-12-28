@@ -2,9 +2,11 @@ package user.entity
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import user.repository.UserRepository
 
 class UserDetails(
-    private val user: UserEntity
+    var user: UserEntity,
+    private val userRepository: UserRepository
 ): UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority> {
         return listOf(GrantedAuthority { user.role.value })
@@ -21,4 +23,8 @@ class UserDetails(
     override fun isCredentialsNonExpired(): Boolean = true
 
     override fun isEnabled(): Boolean = true
+
+    fun setUser(id: Long) {
+        user = userRepository.findOneById(id) ?: throw RuntimeException("User not found")
+    }
 }
