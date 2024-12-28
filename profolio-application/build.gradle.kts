@@ -7,5 +7,9 @@ bootJar.enabled = false
 jar.enabled = true
 
 dependencies {
-//    api(project(":library"))
+    api(project(":profolio-infrastructure"))
+    api(project(":profolio-domain"))
+    api(project(":profolio-domain:profolio-domain-rds"))
+
+    runtimeOnly("com.mysql:mysql-connector-j")
 }

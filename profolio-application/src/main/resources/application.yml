@@ -1,3 +1,13 @@
 spring:
-#  datasource:
-#    driver-class-name:
+  datasource:
+    url: jdbc:mysql://${DB_HOST}/${DB_SCHEMA}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        show-sql: false

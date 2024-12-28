@@ -1,7 +1,6 @@
 package security.jwt.support
 
 import jakarta.servlet.http.HttpServletRequest
-import jdk.internal.joptsimple.internal.Strings
 import org.springframework.http.HttpHeaders
 import user.enumeration.TokenType
 import java.util.Enumeration
@@ -17,6 +16,6 @@ object TokenExtractor {
             }
         }
 
-        return Strings.EMPTY
+        return ""
     }
 }
