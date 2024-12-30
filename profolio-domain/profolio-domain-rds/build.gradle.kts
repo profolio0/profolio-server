@@ -1,4 +1,3 @@
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.jetbrains.exposed:exposed-spring-boot-starter:0.57.0")
 }

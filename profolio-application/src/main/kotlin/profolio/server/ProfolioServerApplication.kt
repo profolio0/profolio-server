@@ -7,5 +7,6 @@ import org.springframework.boot.runApplication
 class ProfolioServerApplication
 
 fun main(args: Array<String>) {
+    @Suppress("SpreadOperator")
     runApplication<ProfolioServerApplication>(*args)
 }
