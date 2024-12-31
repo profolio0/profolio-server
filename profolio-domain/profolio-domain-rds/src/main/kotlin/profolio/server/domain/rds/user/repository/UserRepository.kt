@@ -3,10 +3,12 @@ package profolio.server.domain.rds.user.repository
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
+import org.springframework.stereotype.Repository
 import profolio.server.domain.rds.user.entity.UserEntity
 import profolio.server.domain.rds.user.entity.UserId
 import profolio.server.domain.rds.user.entity.User
 
+@Repository
 class UserRepository {
     fun findById(id: UserId): User? {
         return UserEntity

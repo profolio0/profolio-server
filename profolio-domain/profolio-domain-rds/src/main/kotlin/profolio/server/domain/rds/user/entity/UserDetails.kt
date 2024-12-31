@@ -23,8 +23,4 @@ class UserDetails(
     override fun isCredentialsNonExpired(): Boolean = true
 
     override fun isEnabled(): Boolean = true
-
-    fun setUser(id: Long) {
-        user = userRepository.findById(UserId(id))?: throw RuntimeException("User not found")
-    }
 }

@@ -1,10 +1,14 @@
 package profolio.server.infrastructure.security.jwt.util
 
-import org.springframework.boot.context.properties.ConfigurationProperties
+import io.jsonwebtoken.Jwts
+import org.springframework.stereotype.Component
 
-@ConfigurationProperties(prefix = "app.jwt")
-data class JwtProvider (
-    val secretKey: String,
-    val access: Long,
-    val refresh: Long
-)
+@Component
+class JwtProvider {
+
+    fun generate(): String? {
+        return Jwts.builder()
+            .claim()
+            .compact()
+    }
+}
