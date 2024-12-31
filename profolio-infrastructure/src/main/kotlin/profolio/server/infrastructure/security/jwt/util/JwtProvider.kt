@@ -2,6 +2,8 @@ package profolio.server.infrastructure.security.jwt.util
 
 import io.jsonwebtoken.Jwts
 import org.springframework.stereotype.Component
+import profolio.server.domain.rds.user.entity.User
+import profolio.server.domain.rds.user.enumeration.TokenType
 
 @Component
 class JwtProvider(
@@ -12,9 +14,12 @@ class JwtProvider(
         return Jwts.parser().verifyWith(jwtProperties.secretKeySpec).build().parseSignedClaims(token).payload.id.toLong()
     }
 
-    fun generate(): String {
+    fun generate(user: User, tokenType: TokenType): String {
         return Jwts.builder()
-            .id(UUID.randomUUID().toString())
+            .id(user.id.toString())
+            .claim("category", tokenType.name)
+            .claim("email", user.email)
+            .claim("role", user.role)
             .signWith(jwtProperties.secretKeySpec)
             .compact()
     }

@@ -6,6 +6,6 @@ object UserEntity: LongIdTable() {
     val email = varchar("email", 255)
     val nickname = text("nickname").nullable()
     val password = varchar("password", 255)
-    val profileImage = text("profile_image").default("https://picsum.photos/200")
+    val profileImage = varchar("profile_image", 255).default("https://picsum.photos/200")
     val role = varchar("role", 50)
 }
