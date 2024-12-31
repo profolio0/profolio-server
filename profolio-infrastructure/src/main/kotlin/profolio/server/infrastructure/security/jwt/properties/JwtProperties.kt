@@ -1,4 +1,4 @@
-package profolio.server.infrastructure.security.jwt.util
+package profolio.server.infrastructure.security.jwt.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import java.nio.charset.StandardCharsets

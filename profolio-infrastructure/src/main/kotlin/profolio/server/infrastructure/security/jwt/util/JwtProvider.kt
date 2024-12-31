@@ -4,6 +4,7 @@ import io.jsonwebtoken.Jwts
 import org.springframework.stereotype.Component
 import profolio.server.domain.rds.user.entity.User
 import profolio.server.domain.rds.user.enumeration.TokenType
+import profolio.server.infrastructure.security.jwt.properties.JwtProperties
 
 @Component
 class JwtProvider(
