@@ -7,15 +7,18 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
+import profolio.server.domain.rds.user.entity.User
 import profolio.server.domain.rds.user.entity.UserDetails
 import profolio.server.domain.rds.user.entity.UserId
-import profolio.server.infrastructure.security.jwt.support.TokenExtractor
 import profolio.server.domain.rds.user.enumeration.TokenType
 import profolio.server.domain.rds.user.repository.UserRepository
+import profolio.server.infrastructure.security.jwt.support.TokenExtractor
+import profolio.server.infrastructure.security.jwt.util.JwtProvider
 
 @Component
 class TokenFilter(
-    val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val jwtProvider: JwtProvider
 ): OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -39,7 +42,7 @@ class TokenFilter(
     }
 
     private fun getUserDetails(token: String): UserDetails {
-        return UserDetails(user = userRepository.findById(UserId(token.)))
+        val user: User = userRepository.findById(UserId(jwtProvider.getId(token)))?: throw RuntimeException("User not found")
+        return UserDetails(user)
     }
-
 }

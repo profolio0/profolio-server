@@ -2,11 +2,9 @@ package profolio.server.domain.rds.user.entity
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
-import profolio.server.domain.rds.user.repository.UserRepository
 
 class UserDetails(
-    var user: User,
-    private val userRepository: UserRepository
+    var user: User
 ): UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority> {
         return listOf(GrantedAuthority { user.role })
