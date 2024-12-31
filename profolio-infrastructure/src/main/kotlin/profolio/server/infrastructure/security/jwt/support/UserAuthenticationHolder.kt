@@ -6,7 +6,7 @@ import profolio.server.domain.rds.user.entity.User
 import profolio.server.domain.rds.user.entity.UserDetails
 
 @Component
-object UserAuthenticationHolder {
+class UserAuthenticationHolder {
     fun current(): User {
         return (SecurityContextHolder.getContext().authentication.principal as UserDetails).user
     }

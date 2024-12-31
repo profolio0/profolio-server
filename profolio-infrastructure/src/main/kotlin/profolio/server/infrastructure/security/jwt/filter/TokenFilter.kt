@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
+import profolio.server.domain.rds.user.entity.UserDetails
 import profolio.server.infrastructure.security.jwt.support.TokenExtractor
 import profolio.server.domain.rds.user.enumeration.TokenType
 
@@ -20,5 +21,10 @@ class TokenFilter: OncePerRequestFilter() {
         if (token.isNotEmpty()) {
 
         }
+        filterChain.doFilter(request, response)
+    }
+
+    private fun getUserDetails(token: String): UserDetails {
+
     }
 }

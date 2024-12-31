@@ -7,4 +7,6 @@ spring:
 
 app:
   jwt:
-    secret: testItWillBeChange
+    secret-key: testItWillBeChange
+    access: 35000
+    refresh: 131231231
