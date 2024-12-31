@@ -1,4 +1,4 @@
-package profolio.server.infrastructure.security.jwt.support
+package profolio.server.infrastructure.security.jwt.util
 
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.http.HttpHeaders

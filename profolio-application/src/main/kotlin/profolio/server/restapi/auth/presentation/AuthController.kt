@@ -16,6 +16,6 @@ class AuthController(
     fun signIn(
         @RequestBody loginRequest: LoginRequest
     ): ResponseEntity<Response<Any>>? {
-        return null
+        return
     }
 }

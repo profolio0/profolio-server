@@ -12,7 +12,7 @@ import profolio.server.domain.rds.user.entity.UserDetails
 import profolio.server.domain.rds.user.entity.UserId
 import profolio.server.domain.rds.user.enumeration.TokenType
 import profolio.server.domain.rds.user.repository.UserRepository
-import profolio.server.infrastructure.security.jwt.support.TokenExtractor
+import profolio.server.infrastructure.security.jwt.util.TokenExtractor
 import profolio.server.infrastructure.security.jwt.util.JwtProvider
 
 @Component
