@@ -4,11 +4,18 @@ import io.jsonwebtoken.Jwts
 import org.springframework.stereotype.Component
 
 @Component
-class JwtProvider {
+class JwtProvider(
+    val jwtProperties: JwtProperties
+) {
 
-    fun generate(): String? {
+    fun getId(token: String): Long {
+        return Jwts.parser().verifyWith(jwtProperties.secretKeySpec).build().parseSignedClaims(token).payload.id.toLong()
+    }
+
+    fun generate(): String {
         return Jwts.builder()
-            .claim()
+            .id(UUID.randomUUID().toString())
+            .signWith(jwtProperties.secretKeySpec)
             .compact()
     }
 }
