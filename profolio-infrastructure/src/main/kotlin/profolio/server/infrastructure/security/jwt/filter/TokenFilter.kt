@@ -7,10 +7,13 @@ import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import profolio.server.domain.rds.user.entity.UserDetails
 import profolio.server.infrastructure.security.jwt.support.TokenExtractor
+import profolio.server.infrastructure.security.jwt.support.UserAuthenticationHolder
 import profolio.server.domain.rds.user.enumeration.TokenType
 
 @Component
-class TokenFilter: OncePerRequestFilter() {
+class TokenFilter(
+    val userAuthenticationHolder: UserAuthenticationHolder
+): OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
