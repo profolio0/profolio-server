@@ -18,6 +18,14 @@ class UserRepository {
             ?.toUser()
     }
 
+    fun findByEmail(email: String): User? {
+        return UserEntity
+            .selectAll()
+            .where { UserEntity.email eq email }
+            .firstOrNull()
+            ?.toUser()
+    }
+
     fun save(user: User) {
         UserEntity.insertAndGetId {
             it[email] = user.email
