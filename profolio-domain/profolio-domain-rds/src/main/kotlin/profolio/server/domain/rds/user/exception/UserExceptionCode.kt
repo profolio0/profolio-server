@@ -8,5 +8,6 @@ enum class UserExceptionCode(
 ): StatusCode {
     USER_ALREADY_EXISTS(400, "User already exists"),
     USER_NOT_FOUND(404, "User not found"),
-    USER_NOT_AUTHORIZED(403, "User not authorized");
+    USER_NOT_AUTHORIZED(403, "User not authorized"),
+    PASSWORD_NOT_MATCH(400, "password not match")
 }

@@ -4,12 +4,14 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.selectAll
 import org.springframework.stereotype.Repository
+import org.springframework.transaction.annotation.Transactional
 import profolio.server.domain.rds.user.entity.UserEntity
 import profolio.server.domain.rds.user.entity.UserId
 import profolio.server.domain.rds.user.entity.User
 
 @Repository
 class UserRepository {
+    @Transactional(readOnly = true)
     fun findById(id: UserId): User? {
         return UserEntity
             .selectAll()
@@ -18,6 +20,7 @@ class UserRepository {
             ?.toUser()
     }
 
+    @Transactional(readOnly = true)
     fun findByEmail(email: String): User? {
         return UserEntity
             .selectAll()
@@ -26,6 +29,7 @@ class UserRepository {
             ?.toUser()
     }
 
+    @Transactional
     fun save(user: User) {
         UserEntity.insertAndGetId {
             it[email] = user.email

@@ -8,12 +8,14 @@ import org.springframework.web.bind.annotation.RestController
 import profolio.server.restapi.auth.application.data.request.LoginRequest
 import profolio.server.restapi.auth.application.data.request.RegisterRequest
 import profolio.server.restapi.auth.application.data.response.TokenResponse
+import profolio.server.restapi.auth.application.useCase.AuthUseCase
 import profolio.server.restapi.support.data.Response
 import profolio.server.restapi.support.data.ResponseData
 
 @RestController
 @RequestMapping("/auth")
 class AuthController(
+    private val useCase: AuthUseCase
 ) {
     @PostMapping("/sign-in")
     fun signIn(
@@ -26,6 +28,6 @@ class AuthController(
     fun signUp(
         @RequestBody registerRequest: RegisterRequest
     ): Response {
-        TODO("회원가입")
+        return useCase.register(registerRequest)
     }
 }
