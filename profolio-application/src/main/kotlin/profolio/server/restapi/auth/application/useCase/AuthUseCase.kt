@@ -3,6 +3,7 @@ package profolio.server.restapi.auth.application.useCase
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 import profolio.server.domain.rds.user.entity.User
+import profolio.server.domain.rds.user.enumeration.JwtType
 import profolio.server.domain.rds.user.enumeration.TokenType
 import profolio.server.domain.rds.user.exception.PasswordNotMatchException
 import profolio.server.domain.rds.user.exception.UserAlreadyExistException
@@ -12,6 +13,7 @@ import profolio.server.infrastructure.security.jwt.properties.JwtProperties
 import profolio.server.infrastructure.security.jwt.util.JwtProvider
 import profolio.server.restapi.auth.application.data.request.LoginRequest
 import profolio.server.restapi.auth.application.data.request.RegisterRequest
+import profolio.server.restapi.auth.application.data.response.TokenResponse
 import profolio.server.restapi.support.data.Response
 
 @Component
@@ -24,7 +26,6 @@ class AuthUseCase(
     fun login(loginRequest: LoginRequest) {
         val user: User = userRepository.findByEmail(loginRequest.email)?: throw UserNotFoundException()
         checkPassword(loginRequest.password, user.password)
-
     }
 
     fun register(registerRequest: RegisterRequest): Response {
@@ -35,9 +36,11 @@ class AuthUseCase(
         return Response.created("successFully registered")
     }
 
-    private fun generateTokens(user: User) {
-//        jwtProvider.generate(user )
-        TODO("jwt 발급")
+    private fun generateTokens(user: User): TokenResponse {
+        return TokenResponse(
+            jwtProvider.generate(user, JwtType.ACCESS, jwtProperties.access),
+            jwtProvider.generate(user, JwtType.REFRESH, jwtProperties.refresh)
+        )
     }
 
     private fun checkPassword(registerRequest: String, encodedPassword: String) {
