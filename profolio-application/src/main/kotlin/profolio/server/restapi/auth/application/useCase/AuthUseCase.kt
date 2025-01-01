@@ -2,23 +2,46 @@ package profolio.server.restapi.auth.application.useCase
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
+import profolio.server.domain.rds.user.entity.User
+import profolio.server.domain.rds.user.enumeration.TokenType
 import profolio.server.domain.rds.user.exception.PasswordNotMatchException
 import profolio.server.domain.rds.user.exception.UserAlreadyExistException
+import profolio.server.domain.rds.user.exception.UserNotFoundException
 import profolio.server.domain.rds.user.repository.UserRepository
+import profolio.server.infrastructure.security.jwt.properties.JwtProperties
+import profolio.server.infrastructure.security.jwt.util.JwtProvider
+import profolio.server.restapi.auth.application.data.request.LoginRequest
 import profolio.server.restapi.auth.application.data.request.RegisterRequest
 import profolio.server.restapi.support.data.Response
 
 @Component
 class AuthUseCase(
     private val userRepository: UserRepository,
-    private val encoder: BCryptPasswordEncoder
+    private val encoder: BCryptPasswordEncoder,
+    private val jwtProvider: JwtProvider,
+    private val jwtProperties: JwtProperties
 ) {
+    fun login(loginRequest: LoginRequest) {
+        val user: User = userRepository.findByEmail(loginRequest.email)?: throw UserNotFoundException()
+        checkPassword(loginRequest.password, user.password)
+
+    }
+
     fun register(registerRequest: RegisterRequest): Response {
         checkIdDuplicate(registerRequest)
         checkPassword(registerRequest)
         userRepository.save(registerRequest.toUser(encoder.encode(registerRequest.password)))
 
-        return Response.ok("successFully registered")
+        return Response.created("successFully registered")
+    }
+
+    private fun generateTokens(user: User) {
+//        jwtProvider.generate(user )
+        TODO("jwt 발급")
+    }
+
+    private fun checkPassword(registerRequest: String, encodedPassword: String) {
+        if (!encoder.matches(registerRequest, encodedPassword)) throw PasswordNotMatchException()
     }
 
     private fun checkPassword(registerRequest: RegisterRequest) {

@@ -1,7 +1,8 @@
 package profolio.server.domain.rds.user.enumeration
 
-enum class TokenType(
+enum class JwtType(
     val value: String
 ) {
-    BEARER("Bearer"),
+    ACCESS("access"),
+    REFRESH("refresh")
 }

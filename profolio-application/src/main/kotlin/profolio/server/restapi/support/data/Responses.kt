@@ -13,7 +13,7 @@ data class Response(
 ): BaseResponse {
     companion object {
         fun ok(message: String) = Response(200, message)
-        fun error(message: String, status: StatusCode) = Response(status.status, message)
+        fun created(message: String) = Response(201, message)
     }
 }
 

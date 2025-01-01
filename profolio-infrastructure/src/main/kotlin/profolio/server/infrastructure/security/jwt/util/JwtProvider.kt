@@ -8,14 +8,14 @@ import profolio.server.infrastructure.security.jwt.properties.JwtProperties
 
 @Component
 class JwtProvider(
-    val jwtProperties: JwtProperties
+    private val jwtProperties: JwtProperties
 ) {
 
     fun getId(token: String): Long {
         return Jwts.parser().verifyWith(jwtProperties.secretKeySpec).build().parseSignedClaims(token).payload.id.toLong()
     }
 
-    fun generate(user: User, tokenType: TokenType): String {
+    fun generate(user: User, tokenType: TokenType, expire: Long): String {
         return Jwts.builder()
             .id(user.id.toString())
             .claim("category", tokenType.name)
