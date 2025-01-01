@@ -1,19 +1,8 @@
-plugins {
-    id("java")
-}
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
-group = "org.profolio"
-version = "0.0.1-SNAPSHOT"
+val bootJar: BootJar by tasks
 
-repositories {
-    mavenCentral()
-}
+bootJar.enabled = false
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
-
-tasks.test {
-    useJUnitPlatform()
 }
