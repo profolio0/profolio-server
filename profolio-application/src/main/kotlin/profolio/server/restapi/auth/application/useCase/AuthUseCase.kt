@@ -15,6 +15,7 @@ import profolio.server.restapi.auth.application.data.request.LoginRequest
 import profolio.server.restapi.auth.application.data.request.RegisterRequest
 import profolio.server.restapi.auth.application.data.response.TokenResponse
 import profolio.server.restapi.support.data.Response
+import profolio.server.restapi.support.data.ResponseData
 
 @Component
 class AuthUseCase(
@@ -23,9 +24,11 @@ class AuthUseCase(
     private val jwtProvider: JwtProvider,
     private val jwtProperties: JwtProperties
 ) {
-    fun login(loginRequest: LoginRequest) {
+    fun login(loginRequest: LoginRequest): ResponseData<TokenResponse> {
         val user: User = userRepository.findByEmail(loginRequest.email)?: throw UserNotFoundException()
         checkPassword(loginRequest.password, user.password)
+
+        return ResponseData.ok("success", generateTokens(user))
     }
 
     fun register(registerRequest: RegisterRequest): Response {

@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component
 import profolio.server.domain.rds.user.entity.User
 import profolio.server.domain.rds.user.enumeration.JwtType
 import profolio.server.infrastructure.security.jwt.properties.JwtProperties
+import java.lang.System.currentTimeMillis
+import java.util.*
 
 @Component
 class JwtProvider(
@@ -21,6 +23,8 @@ class JwtProvider(
             .claim("category", tokenType.value)
             .claim("email", user.email)
             .claim("role", user.role)
+            .issuedAt(Date(currentTimeMillis()))
+            .expiration(Date(currentTimeMillis() + expire))
             .signWith(jwtProperties.secretKeySpec)
             .compact()
     }

@@ -20,7 +20,7 @@ class AuthController(
     fun signIn(
         @RequestBody loginRequest: LoginRequest
     ): ResponseData<TokenResponse> {
-        TODO("로그인")
+        return useCase.login(loginRequest)
     }
 
     @PostMapping("/sign-up")
