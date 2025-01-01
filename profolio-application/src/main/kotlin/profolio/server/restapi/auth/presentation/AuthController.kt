@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import profolio.server.restapi.auth.application.data.request.LoginRequest
 import profolio.server.restapi.auth.application.data.request.RegisterRequest
+import profolio.server.restapi.auth.application.data.response.TokenResponse
 import profolio.server.restapi.support.data.Response
 import profolio.server.restapi.support.data.ResponseData
 
@@ -17,7 +18,7 @@ class AuthController(
     @PostMapping("/sign-in")
     fun signIn(
         @RequestBody loginRequest: LoginRequest
-    ): Response {
+    ): ResponseData<TokenResponse> {
         TODO("로그인")
     }
 

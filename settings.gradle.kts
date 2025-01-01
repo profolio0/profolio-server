@@ -9,3 +9,4 @@ include("profolio-infrastructure")
 include("profolio-domain")
 include("profolio-domain:profolio-domain-rds")
 findProject(":profolio-domain:profolio-domain-rds")?.name = "profolio-domain-rds"
+include("profolio-common")
