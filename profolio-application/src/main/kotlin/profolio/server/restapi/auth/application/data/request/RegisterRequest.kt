@@ -8,7 +8,7 @@ data class RegisterRequest(
     val password: String,
     val passwordCheck: String,
     val nickname: String? = null,
-    val profileImage: String? = null
+    val profileImage: String?
 ) {
     fun toUser(encodedPassword: String): User {
         return User(

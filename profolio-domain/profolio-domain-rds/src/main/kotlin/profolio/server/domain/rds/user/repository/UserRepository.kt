@@ -35,7 +35,7 @@ class UserRepository {
             it[email] = user.email
             it[password] = user.password
             it[nickname] = user.nickname
-            it[profileImage] = user.profileImage
+            it[profileImage] = user.profileImage?: profileImage.defaultValueFun?.invoke()
             it[role] = user.role
         }
     }
