@@ -8,7 +8,7 @@ jar.enabled = true
 
 subprojects {
     dependencies {
-
+        api(project(":profolio-common"))
     }
     jar.enabled = true
     bootJar.enabled = false
