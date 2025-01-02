@@ -33,6 +33,7 @@ class TokenFilter(
     }
 
     private fun setAuthentication(token: String) {
+        jwtProvider.validate(token)
         SecurityContextHolder.getContext().authentication = createAuthentication(token)
     }
 

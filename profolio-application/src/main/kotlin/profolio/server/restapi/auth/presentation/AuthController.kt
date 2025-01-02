@@ -35,6 +35,6 @@ class AuthController(
     fun reissue(
         @RequestBody reissueRequest: ReissueRequest
     ): ResponseData<TokenResponse> {
-        TODO()
+        return useCase.reissue(reissueRequest)
     }
 }

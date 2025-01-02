@@ -16,10 +16,11 @@ class JwtProvider(
     private val jwtProperties: JwtProperties
 ) {
     fun getId(token: String): Long {
-        return Jwts.parser().verifyWith(jwtProperties.secretKeySpec).build().parseSignedClaims(token).payload.id.toLong()
+        return Jwts.parser().verifyWith(jwtProperties.secretKeySpec).build().parseSignedClaims(token).payload
+            .id.toLong()
     }
 
-    fun validate(token: String) {
+    fun validate(token: String, tokenType: JwtType? = null) {
         try {
             val claims = Jwts.parser()
                 .verifyWith(jwtProperties.secretKeySpec)
@@ -28,6 +29,9 @@ class JwtProvider(
                 .payload
             if (claims.expiration.before(Date())) {
                 throw ExpiredTokenException()
+            }
+            if (tokenType != null && claims.get("category", String::class.java) != tokenType.value) {
+                throw InvalidTokenException()
             }
         } catch (e: io.jsonwebtoken.ExpiredJwtException) {
             throw ExpiredTokenException()
@@ -40,7 +44,7 @@ class JwtProvider(
 
     fun generate(user: User, tokenType: JwtType, expire: Long): String {
         return Jwts.builder()
-            .id(user.id.toString())
+            .id(user.id.value.toString())
             .claim("category", tokenType.value)
             .claim("email", user.email)
             .claim("role", user.role)

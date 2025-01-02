@@ -3,6 +3,7 @@ package profolio.server.restapi.auth.application.useCase
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Component
 import profolio.server.domain.rds.user.entity.User
+import profolio.server.domain.rds.user.entity.UserId
 import profolio.server.domain.rds.user.enumeration.JwtType
 import profolio.server.domain.rds.user.enumeration.TokenType
 import profolio.server.domain.rds.user.exception.PasswordNotMatchException
@@ -29,7 +30,7 @@ class AuthUseCase(
         val user: User = userRepository.findByEmail(loginRequest.email)?: throw UserNotFoundException()
         checkPassword(loginRequest.password, user.password)
 
-        return ResponseData.ok("success", generateTokens(user))
+        return ResponseData.ok(generateTokens(user))
     }
 
     fun register(registerRequest: RegisterRequest): Response {
@@ -41,7 +42,13 @@ class AuthUseCase(
     }
 
     fun reissue(reissueRequest: ReissueRequest): ResponseData<TokenResponse> {
-
+        jwtProvider.validate(reissueRequest.refresh, JwtType.REFRESH)
+        return ResponseData.created(
+            generateTokens(
+                userRepository.findById(UserId(jwtProvider.getId(reissueRequest.refresh)))
+                    ?: throw UserNotFoundException()
+            )
+        )
     }
 
     private fun generateTokens(user: User): TokenResponse {

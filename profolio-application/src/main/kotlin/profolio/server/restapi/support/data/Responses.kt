@@ -23,7 +23,8 @@ data class ResponseData<T>(
     val data: T
 ) : BaseResponse {
     companion object {
-        fun <T> ok(message: String, data: T) = ResponseData(200, message, data)
+        fun <T> ok(data: T) = ResponseData(200, "success", data)
+        fun <T> created(data: T) = ResponseData(201, "created", data)
     }
 }
 
