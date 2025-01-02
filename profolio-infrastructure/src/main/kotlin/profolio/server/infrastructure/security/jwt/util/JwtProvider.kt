@@ -19,7 +19,7 @@ class JwtProvider(
         return Jwts.parser().verifyWith(jwtProperties.secretKeySpec).build().parseSignedClaims(token).payload.id.toLong()
     }
 
-    fun validateToken(token: String) {
+    fun validate(token: String) {
         try {
             val claims = Jwts.parser()
                 .verifyWith(jwtProperties.secretKeySpec)
