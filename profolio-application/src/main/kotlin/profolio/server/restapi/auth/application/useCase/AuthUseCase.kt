@@ -13,6 +13,7 @@ import profolio.server.infrastructure.security.jwt.properties.JwtProperties
 import profolio.server.infrastructure.security.jwt.util.JwtProvider
 import profolio.server.restapi.auth.application.data.request.LoginRequest
 import profolio.server.restapi.auth.application.data.request.RegisterRequest
+import profolio.server.restapi.auth.application.data.request.ReissueRequest
 import profolio.server.restapi.auth.application.data.response.TokenResponse
 import profolio.server.restapi.support.data.Response
 import profolio.server.restapi.support.data.ResponseData
@@ -37,6 +38,10 @@ class AuthUseCase(
         userRepository.save(registerRequest.toUser(encoder.encode(registerRequest.password)))
 
         return Response.created("successFully registered")
+    }
+
+    fun reissue(reissueRequest: ReissueRequest): ResponseData<TokenResponse> {
+
     }
 
     private fun generateTokens(user: User): TokenResponse {

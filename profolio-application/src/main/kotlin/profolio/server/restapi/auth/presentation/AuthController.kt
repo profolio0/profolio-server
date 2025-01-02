@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import profolio.server.restapi.auth.application.data.request.LoginRequest
+import profolio.server.restapi.auth.application.data.request.ReissueRequest
 import profolio.server.restapi.auth.application.data.request.RegisterRequest
 import profolio.server.restapi.auth.application.data.response.TokenResponse
 import profolio.server.restapi.auth.application.useCase.AuthUseCase
@@ -28,5 +29,12 @@ class AuthController(
         @RequestBody registerRequest: RegisterRequest
     ): Response {
         return useCase.register(registerRequest)
+    }
+
+    @PostMapping("/reissue")
+    fun reissue(
+        @RequestBody reissueRequest: ReissueRequest
+    ): ResponseData<TokenResponse> {
+        TODO()
     }
 }
