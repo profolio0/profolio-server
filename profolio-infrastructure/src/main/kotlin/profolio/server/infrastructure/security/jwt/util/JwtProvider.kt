@@ -20,19 +20,29 @@ class JwtProvider(
             .id.toLong()
     }
 
-    fun validate(token: String, tokenType: JwtType? = null) {
+    fun getToken(token: String): String {
+        return Jwts.parser().verifyWith(jwtProperties.secretKeySpec).build().parseSignedClaims(token).payload["category"].toString()
+    }
+
+    fun validateAll(token: String, tokenType: JwtType) {
+        validate(token)
+        validateType(token, tokenType)
+    }
+
+    fun validateType(token: String, tokenType: JwtType) {
+        if (getToken(token) != tokenType.value) throw InvalidTokenException()
+    }
+
+    fun validate(token: String) {
         try {
-            val claims = Jwts.parser()
-                .verifyWith(jwtProperties.secretKeySpec)
-                .build()
-                .parseSignedClaims(token)
-                .payload
-            if (claims.expiration.before(Date())) {
-                throw ExpiredTokenException()
-            }
-            if (tokenType != null && claims.get("category", String::class.java) != tokenType.value) {
-                throw InvalidTokenException()
-            }
+            getToken(token)
+            if (
+                Jwts.parser()
+                    .verifyWith(jwtProperties.secretKeySpec)
+                    .build()
+                    .parseSignedClaims(token)
+                    .payload.expiration.before(Date())
+            ) throw ExpiredTokenException()
         } catch (e: io.jsonwebtoken.ExpiredJwtException) {
             throw ExpiredTokenException()
         } catch (e: io.jsonwebtoken.security.SignatureException) {

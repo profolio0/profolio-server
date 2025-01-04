@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component
 import profolio.server.domain.rds.user.entity.User
 import profolio.server.domain.rds.user.entity.UserId
 import profolio.server.domain.rds.user.enumeration.JwtType
-import profolio.server.domain.rds.user.enumeration.TokenType
 import profolio.server.domain.rds.user.exception.PasswordNotMatchException
 import profolio.server.domain.rds.user.exception.UserAlreadyExistException
 import profolio.server.domain.rds.user.exception.UserNotFoundException
@@ -42,7 +41,8 @@ class AuthUseCase(
     }
 
     fun reissue(reissueRequest: ReissueRequest): ResponseData<TokenResponse> {
-        jwtProvider.validate(reissueRequest.refresh, JwtType.REFRESH)
+        jwtProvider.validateAll(reissueRequest.refresh, JwtType.REFRESH)
+
         return ResponseData.created(
             generateTokens(
                 userRepository.findById(UserId(jwtProvider.getId(reissueRequest.refresh)))
