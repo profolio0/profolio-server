@@ -1,13 +1,20 @@
 package profolio.server.domain.redis.userToken.service
 
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
 
 
 @Component
-class RedisTokenService {
-    @Cacheable(value = ["refresh"], key = "#email-#", cacheManager = "redisCacheManager")
-    fun setUserToken(email: String, ) {
-        TODO("토큰 저장하기")
+class RedisTokenService(
+    val redisTemplate: RedisTemplate<String, Any>
+) {
+    @Cacheable(value = ["refresh"], key = "#email-#userAgent", cacheManager = "redisCacheManager")
+    fun setUserToken(
+        email: String,
+        userAgent: String,
+        token: String
+    ) {
+        redisTemplate.opsForValue().set(email, userAgent, token)
     }
 }
