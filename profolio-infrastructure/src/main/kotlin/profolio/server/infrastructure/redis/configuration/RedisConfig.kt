@@ -1,5 +1,6 @@
 package profolio.server.infrastructure.redis.configuration
 
+import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisConnectionFactory
@@ -10,6 +11,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer
 import profolio.server.infrastructure.redis.properties.RedisProperties
 
 
+@EnableCaching
 @Configuration
 class RedisConfig(
     private val properties: RedisProperties,
@@ -21,14 +23,13 @@ class RedisConfig(
 
     @Bean
     fun redisTemplate(): RedisTemplate<String, Any> {
-        val redisTemplate = RedisTemplate<String, Any>()
-        redisTemplate.connectionFactory = redisConnectionFactory()
-
-        redisTemplate.keySerializer = StringRedisSerializer()
-        redisTemplate.valueSerializer = StringRedisSerializer()
-
-        redisTemplate.setDefaultSerializer(StringRedisSerializer())
-
+        val redisTemplate = RedisTemplate<String, Any>().apply {
+            connectionFactory = redisConnectionFactory()
+            keySerializer = StringRedisSerializer()
+            valueSerializer = StringRedisSerializer()
+            setDefaultSerializer(StringRedisSerializer())
+        }
+        
         return redisTemplate
     }
 

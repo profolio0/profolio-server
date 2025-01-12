@@ -5,10 +5,11 @@ rootProject.name = "profolio"
 include("profolio-application")
 include("profolio-infrastructure")
 
+include("profolio-common")
+
 // domain
 include("profolio-domain")
 include("profolio-domain:profolio-domain-rds")
 findProject(":profolio-domain:profolio-domain-rds")?.name = "profolio-domain-rds"
-include("profolio-common")
 include("profolio-domain:profolio-domain-redis")
 findProject(":profolio-domain:profolio-domain-redis")?.name = "profolio-domain-redis"
