@@ -3,6 +3,7 @@ package profolio.server.infrastructure.redis.configuration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.serializer.StringRedisSerializer
@@ -15,7 +16,7 @@ class RedisConfig(
 ) {
     @Bean
     fun redisConnectionFactory(): RedisConnectionFactory {
-        return LettuceConnectionFactory(properties.host, properties.port)
+        return LettuceConnectionFactory(createStandaloneConfiguration())
     }
 
     @Bean
@@ -29,5 +30,11 @@ class RedisConfig(
         redisTemplate.setDefaultSerializer(StringRedisSerializer())
 
         return redisTemplate
+    }
+
+    private fun createStandaloneConfiguration(): RedisStandaloneConfiguration {
+        return RedisStandaloneConfiguration(properties.host, properties.port).apply {
+            setPassword(properties.password)
+        }
     }
 }
